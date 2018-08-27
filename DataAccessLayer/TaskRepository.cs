@@ -9,6 +9,10 @@ namespace DataAccessLayer
 {
     public class TaskRepository
     {
+        /// <summary>
+        /// GetAllTask
+        /// </summary>
+        /// <returns></returns>
         public List<TaskModel> GetAllTask()
         {
             TaskEntities entity = new TaskEntities();
@@ -25,6 +29,11 @@ namespace DataAccessLayer
                          }).ToList();
             return taskE;
         }
+        /// <summary>
+        /// GetTaskById
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
 
         public TaskModel GetTaskById(int taskId)
         {
@@ -43,6 +52,11 @@ namespace DataAccessLayer
                          }).FirstOrDefault();
             return taskE;
         }
+        /// <summary>
+        /// AddTask
+        /// </summary>
+        /// <param name="taskModel"></param>
+        /// <returns></returns>
         public bool AddTask(TaskModel taskModel)
         {
             TaskEntities entity = new TaskEntities();
@@ -56,6 +70,11 @@ namespace DataAccessLayer
             entity.SaveChanges();
             return true;
         }
+        /// <summary>
+        /// UpdateTask
+        /// </summary>
+        /// <param name="taskModel"></param>
+        /// <returns></returns>
         public bool UpdateTask(TaskModel taskModel)
         {
             TaskEntities entity = new TaskEntities();
@@ -71,13 +90,17 @@ namespace DataAccessLayer
             }
             return true;
         }
+        /// <summary>
+        /// DeleteTask
+        /// </summary>
+        /// <param name="taskId"></param>
+        /// <returns></returns>
         public bool DeleteTask(int taskId)
         {
             TaskEntities entity = new TaskEntities();
             var taskE = entity.Tasks.Where(x => x.Task_Id == taskId).FirstOrDefault();
             if (taskE != null)
             {
-                //entity.Database.Delete(taskE);
                 entity.Tasks.Remove(taskE);
                 entity.SaveChanges();
             }
