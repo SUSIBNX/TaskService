@@ -23,8 +23,8 @@ namespace DataAccessLayer
                             Task = task.Task1,
                             ParentTask = task.ParentTask.Parent_Task,
                             Priority = task.Priority,
-                            StartDate = task.Start_Date,
-                            EndDate= task.End_Date,
+                            StartDate = task.Start_Date!=null? task.Start_Date.ToString(): "",
+                            EndDate= task.End_Date!=null? task.End_Date.ToString() : "",
                             ParentId= task.ParentTask.Parent_Id,
                          }).ToList();
             return taskE;
@@ -46,8 +46,8 @@ namespace DataAccessLayer
                              Task = task.Task1,
                              ParentTask = task.ParentTask.Parent_Task,
                              Priority = task.Priority,
-                             StartDate = task.Start_Date,
-                             EndDate = task.End_Date,
+                             StartDate = task.Start_Date != null ? task.Start_Date.ToString() : "",
+                             EndDate = task.End_Date != null ? task.End_Date.ToString() : "",
                              ParentId = task.ParentTask.Parent_Id,
                          }).FirstOrDefault();
             return taskE;
@@ -62,8 +62,10 @@ namespace DataAccessLayer
             TaskEntities entity = new TaskEntities();
             Task addTask = new Task();
             addTask.Task1 = taskModel.Task;
-            addTask.Start_Date = taskModel.StartDate;
-            addTask.End_Date = taskModel.EndDate;
+            if (!string.IsNullOrEmpty(taskModel.StartDate))
+                addTask.Start_Date = Convert.ToDateTime(taskModel.StartDate);
+            if (!string.IsNullOrEmpty(taskModel.EndDate))
+                addTask.End_Date = Convert.ToDateTime(taskModel.EndDate);
             addTask.Priority = taskModel.Priority;
             addTask.Parent_Id = taskModel.ParentId;
             entity.Tasks.Add(addTask);
@@ -82,8 +84,10 @@ namespace DataAccessLayer
             if(taskE!=null)
             {
                 taskE.Task1 = taskModel.Task;
-                taskE.Start_Date = taskModel.StartDate;
-                taskE.End_Date = taskModel.EndDate;
+                if (!string.IsNullOrEmpty(taskModel.StartDate))
+                    taskE.Start_Date = Convert.ToDateTime(taskModel.StartDate);
+                if (!string.IsNullOrEmpty(taskModel.EndDate))
+                    taskE.End_Date = Convert.ToDateTime(taskModel.EndDate);
                 taskE.Priority = taskModel.Priority;
                 taskE.Parent_Id = taskModel.ParentId;
                 entity.SaveChanges();

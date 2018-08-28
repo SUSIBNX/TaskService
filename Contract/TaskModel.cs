@@ -12,8 +12,8 @@ namespace Contract
         public Nullable<int> ParentId { get; set; }
         public string ParentTask { get; set; }
         public string Task { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
         public Nullable<int> Priority { get; set; }
         public Nullable<int> PriorityEnd { get; set; }
     }
