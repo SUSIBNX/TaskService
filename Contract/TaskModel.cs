@@ -15,5 +15,6 @@ namespace Contract
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<int> Priority { get; set; }
+        public Nullable<int> PriorityEnd { get; set; }
     }
 }
