@@ -16,7 +16,12 @@ namespace Task.Business
             var result = obj.GetAllTask();
             return result;
         }
-      
+        public List<TaskModel> SearchTask(TaskModel taskModel)
+        {
+            TaskRepository obj = new TaskRepository();
+            var result = obj.SearchTask(taskModel);
+            return result;
+        }
         public TaskModel GetTaskById(int taskId)
         {
             TaskRepository obj = new TaskRepository();

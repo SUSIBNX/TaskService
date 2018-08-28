@@ -29,6 +29,27 @@ namespace DataAccessLayer
                          }).ToList();
             return taskE;
         }
+        public List<TaskModel> SearchTask(TaskModel taskModel)
+        {
+            TaskEntities entity = new TaskEntities();
+            var taskE = (from task in entity.Tasks.Include("ParentTask")
+                         where (task.Task1.Contains(taskModel.Task) 
+                         || task.ParentTask.Parent_Task.Contains(taskModel.ParentTask)
+                         || (taskModel.Priority!=null && task.Priority>= taskModel.Priority) || (taskModel.PriorityEnd != null && task.Priority <= taskModel.PriorityEnd)
+                         || (taskModel.StartDate != null && task.Start_Date >= Convert.ToDateTime(taskModel.StartDate)) || (taskModel.EndDate != null && task.End_Date <= Convert.ToDateTime(taskModel.StartDate))
+                         )
+                         select new TaskModel()
+                         {
+                             TaskId = task.Task_Id,
+                             Task = task.Task1,
+                             ParentTask = task.ParentTask.Parent_Task,
+                             Priority = task.Priority,
+                             StartDate = task.Start_Date != null ? task.Start_Date.ToString() : "",
+                             EndDate = task.End_Date != null ? task.End_Date.ToString() : "",
+                             ParentId = task.ParentTask.Parent_Id,
+                         }).ToList();
+            return taskE;
+        }
         /// <summary>
         /// GetTaskById
         /// </summary>

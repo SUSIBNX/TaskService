@@ -25,12 +25,20 @@ namespace Task.UI.Tests
             Assert.IsTrue(result!=null);
         }
         [TestMethod]
+        public void SearchTask()
+        {
+            TaskModel searchTask = new TaskModel();
+            searchTask.Task = "Coding";
+            var result = controller.SearchTask(searchTask);
+            Assert.IsTrue(result.Count > 0);
+        }
+        [TestMethod]
         public void AddTask()
         {
             TaskModel addTask = new TaskModel();
             addTask.Task = "Coding";
-            addTask.StartDate = DateTime.Now;
-            addTask.EndDate = DateTime.Now;
+            addTask.StartDate = "10/10/2017";
+            addTask.EndDate = "10/10/2018";
             addTask.Priority = 20;
             addTask.ParentId = null;
             var isAdded=controller.AddTask(addTask);
@@ -42,8 +50,8 @@ namespace Task.UI.Tests
             TaskModel updateTask = new TaskModel();
             updateTask.TaskId = 1;
             updateTask.Task = "Coding";
-            updateTask.StartDate = DateTime.Now;
-            updateTask.EndDate = DateTime.Now;
+            updateTask.StartDate = "10/10/2017";
+            updateTask.EndDate = "10/10/2018";
             updateTask.Priority = 35;
             updateTask.ParentId = null;
             var isUpdated=controller.UpdateTask(updateTask);

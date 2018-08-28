@@ -25,6 +25,13 @@ namespace Task.UI.Controllers
             var result = obj.GetTaskById(taskId);
             return result;
         }
+        [HttpGet]
+        public List<TaskModel> SearchTask(TaskModel taskModel)
+        {
+            TaskManager obj = new TaskManager();
+            var result = obj.SearchTask(taskModel);
+            return result;
+        }
         [HttpPost]
         public bool AddTask(TaskModel taskModel)
         {
