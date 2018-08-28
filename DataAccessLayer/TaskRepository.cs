@@ -23,20 +23,38 @@ namespace DataAccessLayer
                             Task = task.Task1,
                             ParentTask = task.ParentTask.Parent_Task,
                             Priority = task.Priority,
-                            StartDate = task.Start_Date!=null? task.Start_Date.ToString(): "",
-                            EndDate= task.End_Date!=null? task.End_Date.ToString() : "",
+                            StartDate = task.Start_Date,
+                            EndDate= task.End_Date,
                             ParentId= task.ParentTask.Parent_Id,
                          }).ToList();
+
+            if (taskE != null)
+            {
+                foreach (var item in taskE)
+                {
+                    if (item.StartDate != null)
+                        item.StartDateString = item.StartDate.ToString();
+                    if (item.EndDate != null)
+                        item.EndDateString = item.EndDate.ToString();
+                }
+            }
             return taskE;
         }
         public List<TaskModel> SearchTask(TaskModel taskModel)
         {
             TaskEntities entity = new TaskEntities();
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = DateTime.Now;
+            if(taskModel.StartDateString != null)
+                startDate = Convert.ToDateTime(taskModel.StartDateString);
+            if (taskModel.EndDateString != null)
+                endDate = Convert.ToDateTime(taskModel.EndDateString);
+
             var taskE = (from task in entity.Tasks.Include("ParentTask")
                          where (task.Task1.Contains(taskModel.Task) 
                          || task.ParentTask.Parent_Task.Contains(taskModel.ParentTask)
                          || (taskModel.Priority!=null && task.Priority>= taskModel.Priority) || (taskModel.PriorityEnd != null && task.Priority <= taskModel.PriorityEnd)
-                         || (taskModel.StartDate != null && task.Start_Date >= Convert.ToDateTime(taskModel.StartDate)) || (taskModel.EndDate != null && task.End_Date <= Convert.ToDateTime(taskModel.StartDate))
+                         || (taskModel.StartDate != null && task.Start_Date >= startDate) || (taskModel.EndDate != null && task.End_Date <= endDate)
                          )
                          select new TaskModel()
                          {
@@ -44,10 +62,20 @@ namespace DataAccessLayer
                              Task = task.Task1,
                              ParentTask = task.ParentTask.Parent_Task,
                              Priority = task.Priority,
-                             StartDate = task.Start_Date != null ? task.Start_Date.ToString() : "",
-                             EndDate = task.End_Date != null ? task.End_Date.ToString() : "",
+                             StartDate = task.Start_Date,
+                             EndDate = task.End_Date,
                              ParentId = task.ParentTask.Parent_Id,
                          }).ToList();
+
+            if (taskE != null)
+            {   foreach(var item in taskE)
+                {
+                    if (item.StartDate != null)
+                        item.StartDateString = item.StartDate.ToString();
+                    if (item.EndDate != null)
+                        item.EndDateString = item.EndDate.ToString();
+                }
+            }
             return taskE;
         }
         /// <summary>
@@ -67,10 +95,17 @@ namespace DataAccessLayer
                              Task = task.Task1,
                              ParentTask = task.ParentTask.Parent_Task,
                              Priority = task.Priority,
-                             StartDate = task.Start_Date != null ? task.Start_Date.ToString() : "",
-                             EndDate = task.End_Date != null ? task.End_Date.ToString() : "",
+                             StartDate = task.Start_Date,
+                             EndDate = task.End_Date,
                              ParentId = task.ParentTask.Parent_Id,
                          }).FirstOrDefault();
+            if (taskE != null)
+            {
+                if (taskE.StartDate != null)
+                    taskE.StartDateString = taskE.StartDate.ToString();
+                if (taskE.EndDate != null)
+                    taskE.EndDateString = taskE.EndDate.ToString();
+            }
             return taskE;
         }
         /// <summary>
@@ -83,10 +118,10 @@ namespace DataAccessLayer
             TaskEntities entity = new TaskEntities();
             Task addTask = new Task();
             addTask.Task1 = taskModel.Task;
-            if (!string.IsNullOrEmpty(taskModel.StartDate))
-                addTask.Start_Date = Convert.ToDateTime(taskModel.StartDate);
-            if (!string.IsNullOrEmpty(taskModel.EndDate))
-                addTask.End_Date = Convert.ToDateTime(taskModel.EndDate);
+            if (taskModel.StartDateString != null)
+                addTask.Start_Date = Convert.ToDateTime(taskModel.StartDateString);
+            if (taskModel.EndDateString != null)
+                addTask.End_Date = Convert.ToDateTime(taskModel.EndDateString);
             addTask.Priority = taskModel.Priority;
             addTask.Parent_Id = taskModel.ParentId;
             entity.Tasks.Add(addTask);
@@ -105,10 +140,10 @@ namespace DataAccessLayer
             if(taskE!=null)
             {
                 taskE.Task1 = taskModel.Task;
-                if (!string.IsNullOrEmpty(taskModel.StartDate))
-                    taskE.Start_Date = Convert.ToDateTime(taskModel.StartDate);
-                if (!string.IsNullOrEmpty(taskModel.EndDate))
-                    taskE.End_Date = Convert.ToDateTime(taskModel.EndDate);
+                if (taskModel.StartDateString != null)
+                    taskE.Start_Date = Convert.ToDateTime(taskModel.StartDateString);
+                if (taskModel.EndDateString != null)
+                    taskE.End_Date = Convert.ToDateTime(taskModel.EndDateString);
                 taskE.Priority = taskModel.Priority;
                 taskE.Parent_Id = taskModel.ParentId;
                 entity.SaveChanges();
