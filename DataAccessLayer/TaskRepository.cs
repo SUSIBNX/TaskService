@@ -51,11 +51,11 @@ namespace DataAccessLayer
                 endDate = Convert.ToDateTime(taskModel.EndDateString);
 
             var taskE = (from task in entity.Tasks.Include("ParentTask")
-                         where (task.Task1.Contains(taskModel.Task) 
-                         || task.ParentTask.Parent_Task.Contains(taskModel.ParentTask)
-                         || (taskModel.Priority!=null && task.Priority>= taskModel.Priority) || (taskModel.PriorityEnd != null && task.Priority <= taskModel.PriorityEnd)
-                         || (taskModel.StartDate != null && task.Start_Date >= startDate) || (taskModel.EndDate != null && task.End_Date <= endDate)
-                         )
+                         //where ((!string.IsNullOrEmpty(taskModel.Task) ? task.Task1.Contains(taskModel.Task) : true)
+                         //&& (!string.IsNullOrEmpty(taskModel.ParentTask) ? task.ParentTask.Parent_Task.Contains(taskModel.ParentTask) : true)
+                         //&& ((taskModel.Priority != null && taskModel.PriorityEnd != null && task.Priority >= taskModel.Priority && task.Priority <= taskModel.PriorityEnd) || (taskModel.Priority != null && taskModel.PriorityEnd == null && task.Priority >= taskModel.Priority) || (taskModel.PriorityEnd != null && taskModel.Priority != null && task.Priority <= taskModel.PriorityEnd))
+                         //&& ((taskModel.StartDate != null && taskModel.EndDate != null && task.Start_Date >= startDate && task.End_Date <= endDate) || (taskModel.StartDate != null && taskModel.EndDate == null && task.Start_Date >= startDate) || (taskModel.EndDate != null && taskModel.StartDate == null && task.End_Date <= endDate))
+                         //)
                          select new TaskModel()
                          {
                              TaskId = task.Task_Id,
@@ -67,8 +67,29 @@ namespace DataAccessLayer
                              ParentId = task.ParentTask.Parent_Id,
                          }).ToList();
 
-            if (taskE != null)
-            {   foreach(var item in taskE)
+            var taskDeatisls = taskE;
+            if (!string.IsNullOrEmpty(taskModel.Task))
+                taskDeatisls = taskDeatisls.Where(x => x.Task.Contains(taskModel.Task)).ToList();
+            if (!string.IsNullOrEmpty(taskModel.ParentTask))
+                taskDeatisls = taskDeatisls.Where(x => x.ParentTask.Contains(taskModel.ParentTask)).ToList();
+
+            if (taskModel.Priority != null && taskModel.PriorityEnd != null)
+                taskDeatisls = taskDeatisls.Where(x => x.Priority <= taskModel.PriorityEnd && x.Priority >= taskModel.Priority).ToList();
+            if (taskModel.Priority != null && taskModel.PriorityEnd == null)
+                taskDeatisls = taskDeatisls.Where(x => x.Priority == taskModel.Priority).ToList();
+            if (taskModel.Priority == null && taskModel.PriorityEnd != null)
+                taskDeatisls = taskDeatisls.Where(x => x.Priority == taskModel.PriorityEnd).ToList();
+
+            if (!string.IsNullOrEmpty(taskModel.StartDateString) && !string.IsNullOrEmpty(taskModel.EndDateString))
+                taskDeatisls = taskDeatisls.Where(x => x.StartDate <= endDate && x.EndDate >= startDate).ToList();
+            if (!string.IsNullOrEmpty(taskModel.StartDateString) && string.IsNullOrEmpty(taskModel.EndDateString))
+                taskDeatisls = taskDeatisls.Where(x => x.StartDate == startDate).ToList();
+            if (string.IsNullOrEmpty(taskModel.StartDateString) && !string.IsNullOrEmpty(taskModel.EndDateString))
+                taskDeatisls = taskDeatisls.Where(x => x.EndDate == endDate).ToList();
+
+
+            if (taskDeatisls != null)
+            {   foreach(var item in taskDeatisls)
                 {
                     if (item.StartDate != null)
                         item.StartDateString = item.StartDate.ToString();
@@ -76,7 +97,7 @@ namespace DataAccessLayer
                         item.EndDateString = item.EndDate.ToString();
                 }
             }
-            return taskE;
+            return taskDeatisls;
         }
         /// <summary>
         /// GetTaskById

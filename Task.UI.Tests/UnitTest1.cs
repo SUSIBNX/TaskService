@@ -28,9 +28,12 @@ namespace Task.UI.Tests
         public void SearchTask()
         {
             TaskModel searchTask = new TaskModel();
-            searchTask.Task = "Coding";
+            searchTask.Task = "";
+            searchTask.StartDateString = "2017-08-26 23:17:06.810";
+            searchTask.EndDateString = "2018-08-26 23:17:06.810";
             var result = controller.SearchTask(searchTask);
-            Assert.IsTrue(result.Count > 0);
+            if(result!=null)
+                Assert.IsTrue(result.Count > 0);
         }
         [TestMethod]
         public void AddTask()
