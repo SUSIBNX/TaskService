@@ -67,18 +67,20 @@ namespace DataAccessLayer
                              ParentId = task.ParentTask.Parent_Id,
                          }).ToList();
 
-            var taskDeatisls = taskE;
+            List<TaskModel> taskDeatisls = taskE;
             if (!string.IsNullOrEmpty(taskModel.Task))
-                taskDeatisls = taskDeatisls.Where(x => x.Task.Contains(taskModel.Task)).ToList();
+                taskDeatisls = taskDeatisls.Where(x => x.Task.ToUpper() == taskModel.Task.ToUpper()).ToList();
             if (!string.IsNullOrEmpty(taskModel.ParentTask))
-                taskDeatisls = taskDeatisls.Where(x => x.ParentTask.Contains(taskModel.ParentTask)).ToList();
+                taskDeatisls = taskDeatisls.Where(x => x.ParentTask.ToUpper()==taskModel.ParentTask.ToUpper()).ToList();
 
+            int? startPriority = taskModel.Priority;
+            int? endPriority = taskModel.PriorityEnd;
             if (taskModel.Priority != null && taskModel.PriorityEnd != null)
-                taskDeatisls = taskDeatisls.Where(x => x.Priority <= taskModel.PriorityEnd && x.Priority >= taskModel.Priority).ToList();
+                taskDeatisls = taskDeatisls.Where(x => x.Priority <= endPriority && x.Priority >= startPriority).ToList();
             if (taskModel.Priority != null && taskModel.PriorityEnd == null)
-                taskDeatisls = taskDeatisls.Where(x => x.Priority == taskModel.Priority).ToList();
+                taskDeatisls = taskDeatisls.Where(x => x.Priority == startPriority).ToList();
             if (taskModel.Priority == null && taskModel.PriorityEnd != null)
-                taskDeatisls = taskDeatisls.Where(x => x.Priority == taskModel.PriorityEnd).ToList();
+                taskDeatisls = taskDeatisls.Where(x => x.Priority == endPriority).ToList();
 
             if (!string.IsNullOrEmpty(taskModel.StartDateString) && !string.IsNullOrEmpty(taskModel.EndDateString))
                 taskDeatisls = taskDeatisls.Where(x => x.StartDate <= endDate && x.EndDate >= startDate).ToList();

@@ -19,38 +19,38 @@ namespace Task.UI.Controllers
             return result;
         }
         [HttpGet]
-        public TaskModel GetTaskById(int taskId)
+        public TaskModel GetTaskById(int id)
         {
             TaskManager obj = new TaskManager();
-            var result = obj.GetTaskById(taskId);
+            var result = obj.GetTaskById(id);
             return result;
         }
-        [HttpGet]
-        public List<TaskModel> SearchTask(TaskModel taskModel)
+        [HttpPost]
+        public List<TaskModel> SearchTask(object taskModel)
         {
             TaskManager obj = new TaskManager();
             var result = obj.SearchTask(taskModel);
             return result;
         }
         [HttpPost]
-        public bool AddTask(TaskModel taskModel)
+        public bool AddTask(object taskModel)
         {
             TaskManager obj = new TaskManager();
             obj.AddTask(taskModel);
             return true;
         }
         [HttpPost]
-        public bool UpdateTask(TaskModel taskModel)
+        public bool UpdateTask(object taskModel)
         {
             TaskManager obj = new TaskManager();
             obj.UpdateTask(taskModel);
             return true;
         }
         [HttpPost]
-        public bool DeleteTask(int taskId)
+        public bool DeleteTask(int id)
         {
             TaskManager obj = new TaskManager();
-            obj.DeleteTask(taskId);
+            obj.DeleteTask(id);
             return true;
         }
     }

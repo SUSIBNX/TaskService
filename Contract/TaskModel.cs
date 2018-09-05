@@ -18,5 +18,6 @@ namespace Contract
         public DateTime? EndDate { get; set; }
         public Nullable<int> Priority { get; set; }
         public Nullable<int> PriorityEnd { get; set; }
+        public bool IsUnitTest { get; set; }
     }
 }

@@ -31,7 +31,7 @@ namespace Task.UI.Tests
             searchTask.Task = "";
             searchTask.StartDateString = "2017-08-26 23:17:06.810";
             searchTask.EndDateString = "2018-08-26 23:17:06.810";
-            var result = controller.SearchTask(searchTask);
+            var result = controller.SearchTask((object)searchTask);
             if(result!=null)
                 Assert.IsTrue(result.Count > 0);
         }
@@ -41,10 +41,10 @@ namespace Task.UI.Tests
             TaskModel addTask = new TaskModel();
             addTask.Task = "Design";
             addTask.StartDate = DateTime.Now;
-            addTask.EndDate = DateTime.Now;
+            addTask.EndDate = DateTime.Now.AddDays(20);
             addTask.Priority = 15;
             addTask.ParentId = null;
-            var isAdded=controller.AddTask(addTask);
+            var isAdded = controller.AddTask((object)addTask);
             Assert.AreEqual(true, isAdded);
         }
         [TestMethod]
@@ -54,10 +54,10 @@ namespace Task.UI.Tests
             updateTask.TaskId = 1;
             updateTask.Task = "Coding";
             updateTask.StartDate = DateTime.Now;
-            updateTask.EndDate = DateTime.Now;
+            updateTask.EndDate = DateTime.Now.AddDays(13);
             updateTask.Priority = 35;
             updateTask.ParentId = null;
-            var isUpdated=controller.UpdateTask(updateTask);
+            var isUpdated=controller.UpdateTask((object)updateTask);
             Assert.AreEqual(true, isUpdated);
         }
         [TestMethod]
