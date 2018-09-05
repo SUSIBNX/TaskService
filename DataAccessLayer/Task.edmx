@@ -9,7 +9,7 @@
           <Key>
             <PropertyRef Name="Parent_Id" />
           </Key>
-          <Property Name="Parent_Id" Type="int" Nullable="false" />
+          <Property Name="Parent_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Parent_Task" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="Task">
@@ -17,13 +17,13 @@
             <PropertyRef Name="Task_Id" />
           </Key>
           <Property Name="Task_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Parent_Id" Type="int" />
           <Property Name="Task" Type="varchar" MaxLength="150" />
           <Property Name="Start_Date" Type="datetime" />
           <Property Name="End_Date" Type="datetime" />
           <Property Name="Priority" Type="int" />
+          <Property Name="Parent_Id" Type="int" />
         </EntityType>
-        <Association Name="FK_Task_Task">
+        <Association Name="FK__Task__Parent_Id__36B12243">
           <End Role="ParentTask" Type="Self.ParentTask" Multiplicity="0..1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
           <ReferentialConstraint>
@@ -38,7 +38,7 @@
         <EntityContainer Name="TaskModelStoreContainer">
           <EntitySet Name="ParentTask" EntityType="Self.ParentTask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Task_Task" Association="Self.FK_Task_Task">
+          <AssociationSet Name="FK__Task__Parent_Id__36B12243" Association="Self.FK__Task__Parent_Id__36B12243">
             <End Role="ParentTask" EntitySet="ParentTask" />
             <End Role="Task" EntitySet="Task" />
           </AssociationSet>

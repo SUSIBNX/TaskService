@@ -139,6 +139,7 @@ namespace DataAccessLayer
         public bool AddTask(TaskModel taskModel)
         {
             TaskEntities entity = new TaskEntities();
+           
             Task addTask = new Task();
             addTask.Task1 = taskModel.Task;
             if (taskModel.StartDateString != null)
@@ -147,6 +148,12 @@ namespace DataAccessLayer
                 addTask.End_Date = Convert.ToDateTime(taskModel.EndDateString);
             addTask.Priority = taskModel.Priority;
             addTask.Parent_Id = taskModel.ParentId;
+            if (!string.IsNullOrEmpty(taskModel.ParentTask))
+            {
+                ParentTask pTask = new ParentTask();
+                pTask.Parent_Task = taskModel.ParentTask;
+                addTask.ParentTask = pTask;
+            }
             entity.Tasks.Add(addTask);
             entity.SaveChanges();
             return true;

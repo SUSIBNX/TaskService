@@ -54,6 +54,10 @@ namespace Task.Business
             try
             {
                 taskModel = (TaskModel)task;
+                if (taskModel.StartDate != null)
+                    taskModel.StartDateString = taskModel.StartDate.ToString();
+                if (taskModel.EndDate != null)
+                    taskModel.EndDateString = taskModel.EndDate.ToString();
                 return taskModel;
             }
             catch

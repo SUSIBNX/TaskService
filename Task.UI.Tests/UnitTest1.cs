@@ -39,11 +39,11 @@ namespace Task.UI.Tests
         public void AddTask()
         {
             TaskModel addTask = new TaskModel();
-            addTask.Task = "Design";
+            addTask.Task = "UATTest";
             addTask.StartDate = DateTime.Now;
             addTask.EndDate = DateTime.Now.AddDays(20);
             addTask.Priority = 15;
-            addTask.ParentId = null;
+            addTask.ParentTask = "Development";
             var isAdded = controller.AddTask((object)addTask);
             Assert.AreEqual(true, isAdded);
         }
