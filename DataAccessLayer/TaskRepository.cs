@@ -45,9 +45,9 @@ namespace DataAccessLayer
             TaskEntities entity = new TaskEntities();
             DateTime startDate = DateTime.Now;
             DateTime endDate = DateTime.Now;
-            if(taskModel.StartDateString != null)
+            if(!string.IsNullOrEmpty(taskModel.StartDateString))
                 startDate = Convert.ToDateTime(taskModel.StartDateString);
-            if (taskModel.EndDateString != null)
+            if (!string.IsNullOrEmpty(taskModel.EndDateString))
                 endDate = Convert.ToDateTime(taskModel.EndDateString);
 
             var taskE = (from task in entity.Tasks.Include("ParentTask")
