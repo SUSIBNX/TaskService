@@ -99,6 +99,7 @@
     <None Include="Task.edmx.diagram">
       <DependentUpon>Task.edmx</DependentUpon>
     </None>
+    <None Include="Utility\Capsule.zip" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
