@@ -79,7 +79,7 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DBscript\Task_dbscript.sql" />
+    <Content Include="DBscript\TaskDBScript.sql" />
     <Content Include="Task.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Task.Context.cs</LastGenOutput>
