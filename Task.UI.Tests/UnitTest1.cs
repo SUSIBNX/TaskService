@@ -63,8 +63,9 @@ namespace Task.UI.Tests
         [TestMethod]
         public void DeleteTask()
         {
-            var taskId = 1;
-            var isSuccess = true;// controller.DeleteTask(taskId);
+            TaskModel deleteTask = new TaskModel();
+            deleteTask.TaskId = 1;
+            var isSuccess = true;// controller.DeleteTask((object)deleteTask);
             Assert.AreEqual(true, isSuccess);
         }
     }

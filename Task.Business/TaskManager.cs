@@ -42,10 +42,10 @@ namespace Task.Business
             obj.UpdateTask(ModelConverter(taskModel));
             return true;
         }
-        public bool DeleteTask(int taskId)
+        public bool DeleteTask(object taskModel)
         {
             TaskRepository obj = new TaskRepository();
-            obj.DeleteTask(taskId);
+            obj.DeleteTask(ModelConverter(taskModel));
             return true;
         }
         private TaskModel ModelConverter(object task)

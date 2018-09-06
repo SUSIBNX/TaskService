@@ -185,10 +185,10 @@ namespace DataAccessLayer
         /// </summary>
         /// <param name="taskId"></param>
         /// <returns></returns>
-        public bool DeleteTask(int taskId)
+        public bool DeleteTask(TaskModel taskModel)
         {
             TaskEntities entity = new TaskEntities();
-            var taskE = entity.Tasks.Where(x => x.Task_Id == taskId).FirstOrDefault();
+            var taskE = entity.Tasks.Where(x => x.Task_Id == taskModel.TaskId).FirstOrDefault();
             if (taskE != null)
             {
                 entity.Tasks.Remove(taskE);

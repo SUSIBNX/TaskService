@@ -47,10 +47,10 @@ namespace Task.UI.Controllers
             return true;
         }
         [HttpPost]
-        public bool DeleteTask(int id)
+        public bool DeleteTask(object taskModel)
         {
             TaskManager obj = new TaskManager();
-            obj.DeleteTask(id);
+            obj.DeleteTask(taskModel);
             return true;
         }
     }
