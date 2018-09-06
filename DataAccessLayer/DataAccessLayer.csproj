@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <None Include="DBscript\task.zip" />
     <None Include="packages.config" />
     <None Include="Task.edmx.diagram">
       <DependentUpon>Task.edmx</DependentUpon>
