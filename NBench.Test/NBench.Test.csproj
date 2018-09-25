@@ -37,6 +37,10 @@
       <HintPath>..\packages\NBench.1.2.2\lib\net452\NBench.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NBench.Runner, Version=1.2.2.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Nbench\NBench.Runner.exe</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Extensions" />
@@ -56,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="NBenchTest.bat" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Dll\System.Web.Http.dll" />
+    <Content Include="Nbench\NBench.dll" />
+    <Content Include="Nbench\NBench.Runner.exe" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
